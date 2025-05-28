@@ -136,7 +136,7 @@ const Projects = () => {
       title: "Photo Gallery",
       description: "Snapshots of life and beauty captured in every frame.",
       image: "https://imgs.search.brave.com/Gp8rqwGBs03bAovc7g87iEp3AQZ_hL5pgr9vcQZxMCQ/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWdz/LnNlYXJjaC5icmF2/ZS5jb20vYnhkam1z/ck1WTWIxaUxfYjJY/REtySlFvelZKVzI2/X2x0dnZ3Z1ktZ3ZJ/by9yczpmaXQ6NTAw/OjA6MDowL2c6Y2Uv/YUhSMGNITTZMeTls/Ykdaei9hV2RvZEM1/amIyMHZkM0F0L1ky/OXVkR1Z1ZEM5MWNH/eHYvWVdSekx6SXdN/VGt2TURrdi9jR2h2/ZEc4dFoyRnNiR1Z5/L2VTMXZkbVZ5ZG1s/bGR5MW0vWldGMGRY/SmxMVFF1YW5Cbg.jpeg",
-      tags: ["React", "Node.js", "Tailwind],
+      tags: ["React", "Node.js", "Tailwind"],
       demoLink: "https://collegetips-gallery-gamma.vercel.app/",
       githubLink: "https://github.com/Soumojit-007/collegetips_gallery",
     },
