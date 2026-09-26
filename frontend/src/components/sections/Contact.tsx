@@ -57,7 +57,7 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('http://localhost:5001/api/contact', {
+      const response = await fetch('"https://portfolio-backend-c9rm.onrender.com/api/contact"', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
