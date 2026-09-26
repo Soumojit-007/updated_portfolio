@@ -1,38 +1,23 @@
 import express from "express";
 import cors from "cors";
-import nodemailer from "nodemailer";
 import dotenv from "dotenv";
+import { Resend } from "resend";
 
 dotenv.config();
 
 const app = express();
-
 const PORT = process.env.PORT || 5000;
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 app.use(
   cors({
-    // origin: "http://localhost:8000",
-    origin:"https://mywebsite-gray-delta.vercel.app"
+    origin: "https://mywebsite-gray-delta.vercel.app",
   })
 );
 
 app.use(express.json());
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
-
-transporter.verify((error, success) => {
-  if (error) {
-    console.error("SMTP connection failed:", error);
-  } else {
-    console.log("SMTP server is ready");
-  }
-});
 // Health check
 app.get("/", (req, res) => {
   res.json({
@@ -46,6 +31,8 @@ app.post("/api/contact", async (req, res) => {
   try {
     const { name, email, message } = req.body;
 
+    console.log("Contact request received:", { name, email });
+
     if (!name || !email || !message) {
       return res.status(400).json({
         success: false,
@@ -53,38 +40,50 @@ app.post("/api/contact", async (req, res) => {
       });
     }
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER,
+    console.log("Sending email...");
+
+    const { data, error } = await resend.emails.send({
+      from: "Portfolio <onboarding@resend.dev>",
+      to: ["sanjugon2003@gmail.com"],
       replyTo: email,
       subject: `Portfolio Contact - ${name}`,
+      html: `
+        <h2>New Portfolio Contact</h2>
 
-      text: `
-New message from your portfolio
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
 
-Name: ${name}
-Email: ${email}
-
-Message:
-${message}
+        <h3>Message:</h3>
+        <p>${message}</p>
       `,
     });
 
-    res.status(200).json({
+    if (error) {
+      console.error("Resend error:", error);
+
+      return res.status(500).json({
+        success: false,
+        message: "Failed to send email.",
+      });
+    }
+
+    console.log("Email sent successfully:", data.id);
+
+    return res.status(200).json({
       success: true,
       message: "Message sent successfully!",
     });
 
   } catch (error) {
-    console.error("Email error:", error);
+    console.error("Contact error:", error);
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
-      message: "Failed to send message.",
+      message: "Failed to send email.",
     });
   }
 });
 
 app.listen(PORT, () => {
-  console.log(`Backend running on http://localhost:${PORT}`);
+  console.log(`Backend running on port ${PORT}`);
 });
