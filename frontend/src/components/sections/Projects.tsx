@@ -15,8 +15,8 @@ const ProjectCard = ({
   description: string;
   image: string;
   tags: string[];
-  demoLink: string;
-  githubLink: string;
+  demoLink?: string;
+  githubLink?: string;
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
