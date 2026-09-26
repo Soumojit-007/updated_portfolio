@@ -11,7 +11,8 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: "http://localhost:8000",
+    // origin: "http://localhost:8000",
+    origin:"https://mywebsite-gray-delta.vercel.app"
   })
 );
 
