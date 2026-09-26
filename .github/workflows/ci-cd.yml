@@ -35,9 +35,6 @@ jobs:
       - name: Check backend
         run: node --check server.js
 
-      - name: Deploy backend to Render
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
 
 
   frontend:
